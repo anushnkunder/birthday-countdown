@@ -1,5 +1,3 @@
-// 🌌 Constellation Canvas Logic
-const toggleBtn = document.getElementById("toggleConstellation");
 const canvas = document.getElementById("constellationCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -8,65 +6,72 @@ function resizeCanvas() {
   canvas.height = window.innerHeight;
 }
 resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
+window.addEventListener("resize", resizeCanvas);
 
-let constellationActive = false;
 let stars = [];
+let connections = [];
+let currentConnectionIndex = 0;
 
-function generateStars() {
-  const starCount = window.innerWidth < 600 ? 30 : 100; // Fewer stars on mobile
-  stars = [];
-  for (let i = 0; i < starCount; i++) {
-    stars.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height
-    });
+// Generate fixed stars
+const starCount = window.innerWidth < 600 ? 25 : 50;
+
+for (let i = 0; i < starCount; i++) {
+  stars.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+  });
+}
+
+// Create connections but don’t draw yet
+for (let i = 0; i < stars.length; i++) {
+  for (let j = i + 1; j < stars.length; j++) {
+    const dx = stars[i].x - stars[j].x;
+    const dy = stars[i].y - stars[j].y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    const connectDistance = window.innerWidth < 600 ? 60 : 100;
+
+    if (dist < connectDistance) {
+      connections.push([i, j]);
+    }
   }
 }
 
-generateStars();
-
-toggleBtn.style.display = "inline-block";
-
-toggleBtn.onclick = () => {
-  constellationActive = !constellationActive;
-  if (constellationActive) {
-    generateStars();
-    drawConstellations();
-  } else {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
-};
-
-function drawConstellations() {
-  if (!constellationActive) return;
-
+// Always draw the stars
+function drawStars() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "#ffffff";
-  ctx.strokeStyle = "#ae7be3";
-  ctx.lineWidth = 0.5;
 
-  stars.forEach(star => {
+  for (const star of stars) {
     ctx.beginPath();
-    ctx.arc(star.x, star.y, 1.5, 0, Math.PI * 2);
+    ctx.arc(star.x, star.y, 1.8, 0, Math.PI * 2);
     ctx.fill();
-  });
+  }
+}
 
-  const connectDistance = window.innerWidth < 600 ? 60 : 100;
+drawStars(); // draw stars immediately on load
 
-  for (let i = 0; i < stars.length; i++) {
-    for (let j = i + 1; j < stars.length; j++) {
-      const dx = stars[i].x - stars[j].x;
-      const dy = stars[i].y - stars[j].y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < connectDistance) {
-        ctx.beginPath();
-        ctx.moveTo(stars[i].x, stars[i].y);
-        ctx.lineTo(stars[j].x, stars[j].y);
-        ctx.stroke();
-      }
-    }
+// 🎁 Trigger constellation animation after button click
+document.getElementById("presentButton").addEventListener("click", () => {
+  currentConnectionIndex = 0;
+  drawConstellationsAnimated();
+});
+
+function drawConstellationsAnimated() {
+  drawStars();
+
+  ctx.strokeStyle = "#ae7be3";
+  ctx.lineWidth = 0.6;
+
+  for (let k = 0; k < currentConnectionIndex; k++) {
+    const [i, j] = connections[k];
+    ctx.beginPath();
+    ctx.moveTo(stars[i].x, stars[i].y);
+    ctx.lineTo(stars[j].x, stars[j].y);
+    ctx.stroke();
   }
 
-  requestAnimationFrame(drawConstellations);
+  if (currentConnectionIndex < connections.length) {
+    currentConnectionIndex++;
+    setTimeout(drawConstellationsAnimated, 30); // animation speed
+  }
 }
