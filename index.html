@@ -1,26 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Birthday Countdown</title>
-  <link rel="stylesheet" href="Birthday.css">
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Orbitron&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Birthday Magic</title>
+    <link rel="stylesheet" href="Birthday.css">
 </head>
 <body>
-  <h1>Countdown to Special Day ✨</h1>
+    <div class="stars"></div>
+    
+    <div class="container">
+        <div class="countdown" id="countdown">
+            <h1>Something Magical is Coming...</h1>
+            <div class="countdown-timer" id="timer">00:00:00:00</div>
+        </div>
+        
+        <button class="present-button" id="presentButton">Click to open your present ✨</button>
+        
+        <div class="story-container" id="storyContainer">
+            <div class="story-text" id="storyText"></div>
+        </div>
+        
+        <div class="cake-container" id="cakeContainer">
+            <div class="cake">
+                <!-- Bottom layer -->
+                <div class="cake-layer layer-bottom">
+                    <div class="frosting frosting-bottom"></div>
+                    <div class="decoration decoration-bottom"></div>
+                </div>
+                
+                <!-- Middle layer -->
+                <div class="cake-layer layer-middle">
+                    <div class="frosting frosting-middle"></div>
+                    <div class="decoration decoration-middle"></div>
+                </div>
+                
+                <!-- Top layer -->
+                <div class="cake-layer layer-top">
+                    <div class="frosting frosting-top"></div>
+                    <div class="decoration decoration-top"></div>
+                </div>
+                
+                <!-- Candles -->
+                <div class="candles">
+                    <div class="candle candle-1">
+                        <div class="candle-stick"></div>
+                        <div class="flame"></div>
+                    </div>
+                    <div class="candle candle-2">
+                        <div class="candle-stick"></div>
+                        <div class="flame"></div>
+                    </div>
+                    <div class="candle candle-3">
+                        <div class="candle-stick"></div>
+                        <div class="flame"></div>
+                    </div>
+                    <div class="candle candle-4">
+                        <div class="candle-stick"></div>
+                        <div class="flame"></div>
+                    </div>
+                    <div class="candle candle-5">
+                        <div class="candle-stick"></div>
+                        <div class="flame"></div>
+                    </div>
+                </div>
+                
+                <!-- Cake plate -->
+                <div class="cake-plate"></div>
+            </div>
+        </div>
+        
+        <div class="birthday-message" id="birthdayMessage">
+            Happy Birthday to someone unforgettable ✨
+        </div>
+    </div>
 
-  <div id="countdown"></div>
-  <div id="birthdayMessage">🎉 It's Birthday! 🎂✨</div>
-
-  <button id="presentButton">Click to open your present 🎁</button>
-  <button id="toggleConstellation">Toggle Constellation Mode ✨</button>
-
-  <canvas id="constellationCanvas"></canvas>
-
-  <!-- Confetti library -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="Birthday.js"></script>
+    <script src="Birthday.js"></script>
 </body>
 </html>
- 
